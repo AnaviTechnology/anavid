@@ -20,11 +20,21 @@ make
 sudo make install
 ```
 
-* Build
+* Install pigpio
+
+```
+git clone https://github.com/joan2937/pigpio.git
+cd pigpio
+make
+sudo make install
+```
+
+* Build and install
 
 ```
 cd anavid
 make
+sudo make install
 ```
 
 # MQTT Commands
