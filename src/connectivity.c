@@ -51,6 +51,33 @@ int getStatus(JsonNode* json, const char* element)
 //------------------------------------------------------------------------------
 
 /**
+ * Get a value for LED in range 0-255
+ *
+ * @param json JSON
+ * @param element name of the element in the JSON
+ *
+ * @return value, 0 in case of wrong data, -1 if JSON member is not set
+ */
+int getLedValue(JsonNode* json, const char* element)
+{
+	JsonNode* member = json_find_member(json, element);
+	if (NULL == member)
+	{
+		return -1;
+	}
+	// Return 0 if the value is not numeric or if it
+	// is not in range 0-255
+	if ( (JSON_NUMBER != member->tag) ||
+	     (0 > member->number_) ||
+	     (255 < member->number_) )
+	{
+		return 0;
+	}
+	return (int) member->number_;
+}
+//------------------------------------------------------------------------------
+
+/**
  * Is JSON valid?
  *
  * @param node JSON
@@ -118,6 +145,7 @@ int msgarrvd(void* context, char* topicName, int topicLen, MQTTClient_message* m
 		JsonNode* node = json_decode(payload);
 		if (0 == isJsonValid(node))
 		{
+			// Get state: ON or OFF
 			if (0 == strcmp(levels[2], TOPICRGBLED))
 			{
 				status.rgbLed = getStatus(node, "state");
@@ -136,6 +164,16 @@ int msgarrvd(void* context, char* topicName, int topicLen, MQTTClient_message* m
 					digitalWrite(PINRGBLED3, 1);
 				}
 			}
+
+			// Get brightness
+			int brightness = getLedValue(node, "brightness");
+			if (-1 < brightness)
+			{
+				status.brightness = brightness;
+				printf("Brightness: %d\n", brightness);
+			}
+
+			// TODO: Get RGB colors
 		}
 		json_delete(node);
 	}
