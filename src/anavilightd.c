@@ -17,6 +17,7 @@
 #include "machineId.h"
 #include "connectivity.h"
 #include "configuration.h"
+#include "rgb.h"
 
 /**
  * Calculate delta (aka difference) between an old and new data
@@ -71,6 +72,14 @@ int main(int argc, char* argv[])
 {
 	// Handle Ctrl-C
 	signal(SIGINT, shutDownDaemon);
+
+	printFlags = 0;
+	sock = openSocket();
+	if (SOCKET_OPEN_FAILED == sock)
+	{
+		fatal("socket connect failed");
+		exit(1);
+	}
 
 	if (0 > readMachineId())
 	{

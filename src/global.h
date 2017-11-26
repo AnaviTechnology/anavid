@@ -1,6 +1,8 @@
 #include <pthread.h>
 #include <MQTTClient.h>
 
+#include "command.h"
+
 // Configuration file
 #define CONFIGFILE 		"/etc/anavilight.ini"
 
@@ -24,6 +26,11 @@
 
 #define TOPICACTION		"action"
 #define TOPICRGBLED		"rgbled"
+
+// For pigpio
+#define SOCKET_OPEN_FAILED 	-1
+#define PRINT_HEX		1
+#define PRINT_ASCII		2
 
 // GPIO
 
@@ -57,3 +64,7 @@ volatile int lcdHandle;
 
 MQTTClient client;
 MQTTClient_deliveryToken token;
+
+int sock;
+char response_buf[CMD_MAX_EXTENSION];
+int printFlags;

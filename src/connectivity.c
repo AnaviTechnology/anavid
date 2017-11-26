@@ -1,8 +1,10 @@
 #include <unistd.h>
 #include <wiringPi.h>
+#include <stdbool.h>
 
 #include "global.h"
 #include "connectivity.h"
+#include "rgb.h"
 
 /**
  * Callback for delivered MQTT message
@@ -174,33 +176,42 @@ int msgarrvd(void* context, char* topicName, int topicLen, MQTTClient_message* m
 				if (0 == status.rgbLed)
 				{
 					printf("Turing the lights OFF.\n");
-					digitalWrite(PINRGBLED1, 0);
-					digitalWrite(PINRGBLED2, 0);
-					digitalWrite(PINRGBLED3, 0);
+					setRGB(0, 0, 0);
 				}
 				else
 				{
-					printf("Turning the lights ON.\n");
-					digitalWrite(PINRGBLED1, 1);
-					digitalWrite(PINRGBLED2, 1);
-					digitalWrite(PINRGBLED3, 1);
-				}
-			}
+					// Get brightness
+					int brightness = getLedValue(node, "brightness");
+					if (-1 < brightness)
+					{
+						status.brightness = brightness;
+						printf("Brightness: %d\n", brightness);
+						status.ledRed = brightness;
+						status.ledGreen = brightness;
+						status.ledBlue = brightness;
+					}
+					else
+					{
+						// Get RGB colors (makes sense only if
+						// brightness is not set
+						getConfigRGB(node);
+						printf("Red: %d Green: %d Blue: %d\n",
+							status.ledRed, status.ledGreen, status.ledBlue);
+					}
 
-			// Get brightness
-			int brightness = getLedValue(node, "brightness");
-			if (-1 < brightness)
-			{
-				status.brightness = brightness;
-				printf("Brightness: %d\n", brightness);
-			}
-			else
-			{
-				// Get RGB colors (makes sense only if
-				// brightness is not set
-				getConfigRGB(node);
-				printf("Red: %d Green: %d Blue: %d\n",
-					status.ledRed, status.ledGreen, status.ledBlue);
+					// Handle the case when lights are turned on but
+					// brightness or colors are not set. In this case
+					// make all lights at max
+					if ( (0 == status.ledRed) &&
+						(0 == status.ledGreen) &&
+						(0 == status.ledBlue) )
+					{
+						status.ledRed = 255;
+						status.ledGreen = 255;
+						status.ledBlue = 255;
+					}
+					setRGB(status.ledRed, status.ledGreen, status.ledBlue);
+				}
 			}
 		}
 		json_delete(node);
