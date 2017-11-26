@@ -60,6 +60,10 @@ void initSensorsData(struct sensors data)
 	data.buzzer = 0;
 	data.relay = 0;
 	data.rgbLed = 0;
+	data.brightness = 0;
+	data.ledRed = 0;
+	data.ledGreen = 0;
+	data.ledBlue = 0;
 }
 //------------------------------------------------------------------------------
 

@@ -45,6 +45,10 @@ struct sensors {
 	int buzzer;
 	int relay;
 	int rgbLed;
+	int brightness;
+	int ledRed;
+	int ledBlue;
+	int ledGreen;
 } sensors, status;
 
 volatile MQTTClient_deliveryToken deliveredtoken;
