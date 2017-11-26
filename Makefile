@@ -16,6 +16,7 @@ INCLUDES := $(wildcard $(SRCDIR)/*.h)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 rm       = rm -f
 
+prefix	 = /usr/local
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p ${BINDIR}
@@ -27,12 +28,17 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@echo "Compiled "$<" successfully!"
 
-.PHONEY: clean
+.PHONY: clean
 clean:
 	@$(rm) $(OBJECTS)
 	@echo "Cleanup complete!"
 
-.PHONEY: remove
+.PHONY: remove
 remove: clean
 	@$(rm) $(BINDIR)/$(TARGET)
 	@echo "Executable removed!"
+
+install: $(BINDIR)/$(TARGET)
+	install -m 0755 $(BINDIR)/$(TARGET) $(prefix)/bin
+
+.PHONY: install
