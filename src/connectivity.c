@@ -36,7 +36,7 @@ int getStatus(JsonNode* json, const char* element)
 
 	if (member->tag == JSON_STRING)
 	{
-		status = atof(member->string_);
+		status = (0 == strcmp(member->string_, "ON")) ? 1 : 0;
 	}
 	else if (member->tag == JSON_BOOL)
 	{
@@ -120,14 +120,21 @@ int msgarrvd(void* context, char* topicName, int topicLen, MQTTClient_message* m
 		{
 			if (0 == strcmp(levels[2], TOPICRGBLED))
 			{
-				int red = (1 == getStatus(node, "red")) ? HIGH : LOW;
-				digitalWrite(PINRGBLED3, red);
-				int green = (1 == getStatus(node, "green")) ? HIGH : LOW;
-				digitalWrite(PINRGBLED2, green);
-				int blue = (1 == getStatus(node, "blue")) ? HIGH : LOW;
-				digitalWrite(PINRGBLED1, blue);
-				status.rgbLed = ( (HIGH == red) && (HIGH == green) && (HIGH == blue) ) ? 0 : 1;
-				printf("LED red: %d, green: %d, blue: %d\n", red, green, blue);
+				status.rgbLed = getStatus(node, "state");
+				if (0 == status.rgbLed)
+				{
+					printf("Turing the lights OFF.\n");
+					digitalWrite(PINRGBLED1, 0);
+					digitalWrite(PINRGBLED2, 0);
+					digitalWrite(PINRGBLED3, 0);
+				}
+				else
+				{
+					printf("Turning the lights ON.\n");
+					digitalWrite(PINRGBLED1, 1);
+					digitalWrite(PINRGBLED2, 1);
+					digitalWrite(PINRGBLED3, 1);
+				}
 			}
 		}
 		json_delete(node);
