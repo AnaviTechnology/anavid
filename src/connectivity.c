@@ -194,11 +194,14 @@ int msgarrvd(void* context, char* topicName, int topicLen, MQTTClient_message* m
 				status.brightness = brightness;
 				printf("Brightness: %d\n", brightness);
 			}
-
-			// TODO: Get RGB colors
-			getConfigRGB(node);
-			printf("red: %d green: %d blue: %d\n",
+			else
+			{
+				// Get RGB colors (makes sense only if
+				// brightness is not set
+				getConfigRGB(node);
+				printf("Red: %d Green: %d Blue: %d\n",
 					status.ledRed, status.ledGreen, status.ledBlue);
+			}
 		}
 		json_delete(node);
 	}
