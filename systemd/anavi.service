@@ -1,0 +1,12 @@
+[Unit]
+Description=ANAVI Daemon Service
+After=pigpio.service mosquitto.service
+Requires=pigpio.service mosquitto.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/anavid
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
