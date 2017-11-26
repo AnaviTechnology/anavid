@@ -1,4 +1,4 @@
-# anavilightd
+# anavid
 Standalone daemon process for controlling ANAVI Light pHAT over MQTT
 
 # Installation
@@ -23,7 +23,7 @@ sudo make install
 * Build
 
 ```
-cd anavilightd
+cd anavid
 make
 ```
 

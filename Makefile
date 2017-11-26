@@ -1,4 +1,4 @@
-TARGET   = anavilightd
+TARGET   = anavid
 
 CC       = gcc
 CFLAGS   = -std=gnu99 -Wall -I.
