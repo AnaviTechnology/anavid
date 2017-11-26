@@ -78,6 +78,28 @@ int getLedValue(JsonNode* json, const char* element)
 //------------------------------------------------------------------------------
 
 /**
+ * Read configuration for RGB colors of the LED strip and save them in
+ * a global variable.
+ *
+ * @param node parsed JSON node
+ */
+void getConfigRGB(JsonNode* node)
+{
+	JsonNode* colors = json_find_member(node, "color");
+	if (NULL == colors)
+	{
+		return;
+	}
+	int red = getLedValue(colors, "r");
+	status.ledRed = (-1 == red) ? 0 : red;
+	int green = getLedValue(colors, "g");
+	status.ledGreen = (-1 == green) ? 0 : green;
+	int blue = getLedValue(colors, "b");
+	status.ledBlue = (-1 == blue) ? 0 : blue;
+}
+//------------------------------------------------------------------------------
+
+/**
  * Is JSON valid?
  *
  * @param node JSON
@@ -174,6 +196,9 @@ int msgarrvd(void* context, char* topicName, int topicLen, MQTTClient_message* m
 			}
 
 			// TODO: Get RGB colors
+			getConfigRGB(node);
+			printf("red: %d green: %d blue: %d\n",
+					status.ledRed, status.ledGreen, status.ledBlue);
 		}
 		json_delete(node);
 	}
