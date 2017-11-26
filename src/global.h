@@ -22,25 +22,17 @@
 // For actions
 #define TOPICACTIONS 		"action/#"
 
-#define TOPICACTION 		"action"
-#define TOPICBUZZER 		"buzzer"
-#define TOPICRELAY		"relay"
+#define TOPICACTION		"action"
 #define TOPICRGBLED		"rgbled"
 
 // GPIO
 
-//Pin 23 on Raspberry Pi corresponds to BCM GPIO 11 and wiringPi pin 14
-#define PINBUTTON		14
-//Pin 29 on Raspberry Pi corresponds to BCM GPIO 5 and wiringPi pin 21
-#define PINRELAY		21
-//Pin 31 on Raspberry Pi corresponds to BCM GPIO 6 and wiringPi pin 22
-#define PINBUZZER 		22
-//Pin 33 on Raspberry Pi corresponds to BCM GPIO 13 and wiringPi pin 23 for blue
-#define PINRGBLED1 		23
-//Pin 35 on Raspberry Pi corresponds to BCM GPIO 19 and wiringPi pin 24 for green
-#define PINRGBLED2 		24
-//Pin 37 on Raspberry Pi corresponds to BCM GPIO 26 and wiringPi pin 25 for red
-#define PINRGBLED3 		25
+//Pin 19 on Raspberry Pi corresponds to BCM GPIO 10 and wiringPi pin 12 for blue
+#define PINRGBLED1 		12
+//Pin 21 on Raspberry Pi corresponds to BCM GPIO 9 and wiringPi pin 14 for green
+#define PINRGBLED2 		14
+//Pin 23 on Raspberry Pi corresponds to BCM GPIO 11 and wiringPi pin 13 for red
+#define PINRGBLED3 		13
 
 pthread_t tid[3];
 

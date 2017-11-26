@@ -118,23 +118,7 @@ int msgarrvd(void* context, char* topicName, int topicLen, MQTTClient_message* m
 		JsonNode* node = json_decode(payload);
 		if (0 == isJsonValid(node))
 		{
-			if (0 == strcmp(levels[2], TOPICBUZZER))
-			{
-				status.buzzer = getStatus(node, "status");
-			}
-			else if (0 == strcmp(levels[2], TOPICRELAY))
-			{
-				status.relay = getStatus(node, "status");
-				if (1 == status.relay)
-				{
-					digitalWrite(PINRELAY, HIGH);
-				}
-				else
-				{
-					digitalWrite(PINRELAY, LOW);
-				}
-			}
-			else if (0 == strcmp(levels[2], TOPICRGBLED))
+			if (0 == strcmp(levels[2], TOPICRGBLED))
 			{
 				int red = (1 == getStatus(node, "red")) ? HIGH : LOW;
 				digitalWrite(PINRGBLED3, red);
