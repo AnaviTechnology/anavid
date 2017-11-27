@@ -10,12 +10,16 @@ LFLAGS   = -Wall -I. -lm -lwiringPi -lwiringPiDev -lpaho-mqtt3c -lpthread
 SRCDIR   = src
 OBJDIR   = obj
 BINDIR   = bin
+SYSDIR	 = systemd
 
 SOURCES  := $(wildcard $(SRCDIR)/*.c)
 INCLUDES := $(wildcard $(SRCDIR)/*.h)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-rm       = rm -f
 
+SYSTEMCTL:=$(shell which systemctl)
+SYSTEMD_UNIT_DIR = /lib/systemd/system
+
+rm       = rm -f
 prefix	 = /usr/local
 
 $(BINDIR)/$(TARGET): $(OBJECTS)
@@ -40,5 +44,10 @@ remove: clean
 
 install: $(BINDIR)/$(TARGET)
 	install -m 0755 $(BINDIR)/$(TARGET) $(prefix)/bin
+	install -m 0644 $(SYSDIR)/pigpio.service $(SYSTEMD_UNIT_DIR)
+	$(SYSTEMCTL) enable pigpio.service
+	install -m 0644 $(SYSDIR)/anavi.service $(SYSTEMD_UNIT_DIR)
+	$(SYSTEMCTL) enable anavi.service
+	echo "\nInstallation completed!\n"
 
 .PHONY: install
