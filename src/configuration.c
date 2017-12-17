@@ -26,7 +26,15 @@ int iniConfigParser(void* user, const char* section, const char* name, const cha
 	else if (MATCH("mqtt", "clientId")) 
 	{
 		pconfig->clientId = strdup(value);
-	} 
+	}
+	else if (MATCH("mqtt", "username"))
+	{
+		pconfig->username = strdup(value);
+	}
+	else if (MATCH("mqtt", "password"))
+	{
+		pconfig->password = strdup(value);
+	}	
 	return 0; 
 }
 //------------------------------------------------------------------------------

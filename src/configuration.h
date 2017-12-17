@@ -7,6 +7,8 @@ typedef struct
 {
 	const char* address;
 	const char* clientId;
+	const char* username;
+	const char* password;
 } configuration;
 
 configuration config;

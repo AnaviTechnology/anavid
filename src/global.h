@@ -9,6 +9,8 @@
 // Default configuratons
 #define ADDRESS			"tcp://hassbian.local:1883"
 #define CLIENTID		"ANAVI-Light-pHAT"
+#define USERNAME		""
+#define PASSWORD		""
 
 // MQTT topics
 

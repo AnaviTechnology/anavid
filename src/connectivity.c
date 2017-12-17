@@ -340,6 +340,8 @@ int mqttConnect()
         MQTTCLIENT_PERSISTENCE_NONE, NULL);
         conn_opts.keepAliveInterval = 20;
         conn_opts.cleansession = 1;
+	conn_opts.username = config.username;
+	conn_opts.password = config.password;
 
 	// Register again callbacks
 	MQTTClient_setCallbacks(client, NULL, connlost, msgarrvd, delivered);
