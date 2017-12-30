@@ -106,9 +106,10 @@ int main(int argc, char* argv[])
 	// 0 if the sensor is not available, 1 if it is available
 	initSensorsData(status);
 
-	if (MQTTCLIENT_SUCCESS != mqttConnect())
+	int connectionStatus = mqttConnect();
+	if (MQTTCLIENT_SUCCESS != connectionStatus)
 	{
-		printf("ERROR: Failed to connect to MQTT broker.\n");
+		printf("ERROR %d: Failed to connect to MQTT broker.\n", connectionStatus);
 		exit(EXIT_FAILURE);
 	}
 
