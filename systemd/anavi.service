@@ -7,6 +7,7 @@ Requires=pigpio.service mosquitto.service
 Type=simple
 ExecStart=/usr/local/bin/anavid
 Restart=on-failure
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target
