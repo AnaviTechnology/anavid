@@ -48,6 +48,6 @@ install: $(BINDIR)/$(TARGET)
 	$(SYSTEMCTL) enable pigpio.service
 	install -m 0644 $(SYSDIR)/anavi.service $(SYSTEMD_UNIT_DIR)
 	$(SYSTEMCTL) enable anavi.service
-	echo "\nInstallation completed!\n"
+	@echo "\nInstallation completed!\n"
 
 .PHONY: install
