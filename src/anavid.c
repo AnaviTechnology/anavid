@@ -40,6 +40,9 @@ double delta(double before, double after)
  */
 void shutDownDaemon()
 {
+	setRGB(0, 0, 0);
+	printf("\nTurning off the lights...\n");
+
 	mqttDisconnect();
 	printf("\nShutting down the MQTT client...\n");
 
@@ -72,6 +75,9 @@ int main(int argc, char* argv[])
 {
 	// Handle Ctrl-C
 	signal(SIGINT, shutDownDaemon);
+	// Handle other cases that lead to termination
+	signal(SIGKILL, shutDownDaemon);
+	signal(SIGTERM, shutDownDaemon);
 
 	printFlags = 0;
 	sock = openSocket();
