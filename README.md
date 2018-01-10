@@ -54,16 +54,10 @@ sudo systemctl start anavi
 * Retrieve the machine id
 
 ```
-journalctl -u anavi | grep "Machine ID"
+cat /etc/machine-id
 ```
 
-For example, the output should be:
-```
-pi@hassbian:/$ journalctl -u anavi | grep "Machine ID"
-Jan 05 01:28:36 hassbian anavid[387]: Machine ID: 26bbc1a1189c44139e080197cbecc2e6
-```
-
-* Replace YOURDEVICEID and add the following lines to configuration.yaml
+* Replace YOURMACHINEID and add the following lines to configuration.yaml
 
 ```
 # MQTT Broker (aka Mosquitto)
@@ -76,7 +70,7 @@ mqtt:
 light:
   - platform: mqtt_json
     name: "ANAVI Light pHAT"
-    command_topic: "YOURDEVICEID/action/rgbled"
+    command_topic: "YOURMACHINEID/action/rgbled"
     brightness: true
     rgb: true
 ```
