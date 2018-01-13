@@ -94,13 +94,13 @@ int main(int argc, char* argv[])
 	}
 	printf("Machine ID: %s\n", machineId);
 
+	config.address = ADDRESS;
+	config.clientId =  CLIENTID;
+	config.username = USERNAME;
+	config.password = PASSWORD;
 	if (0 > ini_parse(CONFIGFILE, iniConfigParser, &config))
 	{
 		printf("ERROR: Cannot open '%s'. Loading default configrations...\n", CONFIGFILE);
-		config.address = ADDRESS;
-		config.clientId =  CLIENTID;
-		config.username = USERNAME;
-		config.password = PASSWORD;
 	}
 	printf("===CONFIGURATIONS===\n");
 	printf("MQTT address: %s\n", config.address);
