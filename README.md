@@ -81,6 +81,30 @@ light:
 sudo systemctl restart home-assistant@homeassistant.service
 ```
 
+# Integration with Amazon Echo and Alexa
+
+* Add the following settings to your configuration.yaml:
+
+```
+emulated_hue:
+  type: alexa
+  expose_by_default: true
+```
+
+* Run the following command to restart Home Assistant and reload configurations:
+
+```
+sudo systemctl restart home-assistant@homeassistant.service
+```
+
+* Ask alexa to discover new devices
+
+
+* Say "Alexa, turn on ANAVI Light pHAT" to turn on the lights
+
+
+* Say "Alexa, turn off ANAVI Light pHAT" to turn off the lights
+
 # MQTT Commands
 
 * Change the colors of the 12V RGB LED strip:
