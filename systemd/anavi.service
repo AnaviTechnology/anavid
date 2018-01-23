@@ -1,7 +1,7 @@
 [Unit]
 Description=ANAVI Daemon Service
-After=pigpio.service mosquitto.service
-Requires=pigpio.service mosquitto.service
+After=pigpio.service
+Requires=pigpio.service
 
 [Service]
 Type=simple
