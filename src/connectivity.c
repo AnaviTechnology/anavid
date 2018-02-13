@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <wiringPi.h>
 #include <stdbool.h>
+#include <openssl/md5.h>
 
 #include "global.h"
 #include "connectivity.h"
@@ -248,6 +249,43 @@ void connlost(void *context, char *cause)
 //------------------------------------------------------------------------------
 
 /**
+ * Calculate the md5 hash of a string
+ *
+ * @param str input text
+ * @param length lenght
+ */
+char *md5(const char *str, int length)
+{
+	MD5_CTX c;
+	MD5_Init(&c);
+
+	while (0 < length)
+	{
+		if (512 < length)
+		{
+			MD5_Update(&c, str, 512);
+		}
+		else
+		{
+			MD5_Update(&c, str, length);
+		}
+		length -= 512;
+		str += 512;
+	}
+
+	unsigned char digest[16];
+	MD5_Final(digest, &c);
+
+	char *hash = (char*)malloc(33);
+	for (int i = 0; i < 16; ++i)
+	{
+		snprintf(&(hash[i*2]), 16*2, "%02x", (unsigned int)digest[i]);
+	}
+	return hash;
+}
+//------------------------------------------------------------------------------
+
+/**
  * Allocate MQTT topic combined from machine ID and suffix
  *
  * @param suffix suffix with additional levels for the MQTT topic
@@ -256,16 +294,18 @@ void connlost(void *context, char *cause)
  */
 char* createMqttTopic(char* suffix)
 {
+	// MQTT topic's 1st level is the md5 of the machine ID
+	char *hash = md5(machineId, strlen(machineId));
 	// Make space for the machine id, slash and the topic
-	size_t lenMachine = strlen(machineId);
 	size_t lenTopic = strlen(suffix);
-	char *mqttTopic = (char*) malloc(lenMachine + 3 + lenTopic);
-	// MQTT topic's 1st level is the machine ID
-	memcpy(mqttTopic, machineId, lenMachine);
+	size_t lenHash = strlen(hash);
+	char *mqttTopic = (char*) malloc(lenHash + 3 + lenTopic);
+	memcpy(mqttTopic, hash, lenHash);
 	// Separate levels
-	memcpy(mqttTopic+lenMachine, "/", 2);
+	memcpy(mqttTopic+lenHash, "/", 2);
 	// Add next levels in MQTT topic
-	memcpy(mqttTopic+lenMachine+1, suffix, lenTopic+1);
+	memcpy(mqttTopic+lenHash+1, suffix, lenTopic+1);
+	free(hash);
 	return mqttTopic;
 }
 //------------------------------------------------------------------------------

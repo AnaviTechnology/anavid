@@ -18,11 +18,11 @@ sudo curl -o /opt/hassbian/suites/install_mosquitto.sh https://raw.githubusercon
 
 ```
 
-* Install wiringpi and piGPIO:
+* Install wiringpi, piGPIO and OpenSSL:
 
 ```
 sudo apt-get update
-sudo apt-get install -y wiringpi pigpio
+sudo apt-get install -y wiringpi pigpio libssl-dev
 ```
 
 * Install Paho (library for MQTT clients)

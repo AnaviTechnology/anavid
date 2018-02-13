@@ -4,7 +4,7 @@ CC       = gcc
 CFLAGS   = -std=gnu99 -Wall -I.
 
 LINKER   = gcc -o
-LFLAGS   = -Wall -I. -lm -lwiringPi -lwiringPiDev -lpaho-mqtt3c -lpthread
+LFLAGS   = -Wall -I. -lm -lwiringPi -lwiringPiDev -lpaho-mqtt3c -lpthread -lcrypto
 
 # change these to set the proper directories where each files shoould be
 SRCDIR   = src
