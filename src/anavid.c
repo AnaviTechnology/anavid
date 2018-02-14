@@ -73,6 +73,25 @@ void initSensorsData(struct sensors data)
 
 int main(int argc, char* argv[])
 {
+        if (0 > readMachineId())
+        {
+                printf("Unable to retrieve unique machine ID.\n");
+                exit(EXIT_FAILURE);
+        }
+	// Print the md5 of the machine ID as it is required for configurations
+	char *hash = md5(machineId, strlen(machineId));
+        printf("Device ID: %s\n", hash);
+	free(hash);
+
+	for (int param = 0; param < argc; ++param)
+	{
+		if (0 == strcmp(argv[param], "-m"))
+		{
+			// Exit after print device ID
+			return 0;
+		}
+	}
+
 	// Handle Ctrl-C
 	signal(SIGINT, shutDownDaemon);
 	// Handle other cases that lead to termination
@@ -86,13 +105,6 @@ int main(int argc, char* argv[])
 		fatal("socket connect failed");
 		exit(1);
 	}
-
-	if (0 > readMachineId())
-	{
-		printf("Unable to retrieve unique machine ID.\n");
-		exit(EXIT_FAILURE);
-	}
-	printf("Machine ID: %s\n", machineId);
 
 	config.address = ADDRESS;
 	config.clientId =  CLIENTID;
