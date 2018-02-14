@@ -1,6 +1,6 @@
 Source: anavi
 Maintainer: Leon Anavi <leon@anavi.org> 
-Build-Depends: debhelper (>= 10.2.5), wiringpi (>= 2.4), pigpio (>= 1.6), pahomqttc (>= 1.0.0)
+Build-Depends: debhelper (>= 10.2.5), wiringpi (>= 2.4), pigpio (>= 1.6), pahomqttc (>= 1.0.0), libssl-dev (>= 1.1.0)
 Standards-Version: 10.2.5
 Section: utils
 
