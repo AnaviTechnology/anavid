@@ -51,13 +51,13 @@ sudo make install
 sudo systemctl start anavi
 ```
 
-* Retrieve the machine id
+* Retrieve device ID
 
 ```
-cat /etc/machine-id
+anavid -m
 ```
 
-* Replace YOURMACHINEID and add the following lines to configuration.yaml
+* Replace DEVICEID and add the following lines to configuration.yaml
 
 ```
 # MQTT Broker (aka Mosquitto)
@@ -70,7 +70,7 @@ mqtt:
 light:
   - platform: mqtt_json
     name: "ANAVI Light pHAT"
-    command_topic: "YOURMACHINEID/action/rgbled"
+    command_topic: "DEVICEID/action/rgbled"
     brightness: true
     rgb: true
 ```
