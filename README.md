@@ -18,6 +18,19 @@ sudo curl -o /opt/hassbian/suites/install_mosquitto.sh https://raw.githubusercon
 
 ```
 
+* Enable anonymous connection to the MQTT broker by editting the following setting in /etc/mosquitto/mosquitto.conf:
+
+```
+allow_anonymous true
+```
+
+* Start Mosquitto and enable its automatic launch at boot:
+
+```
+sudo systemctl enable mosquitto.service
+sudo systemctl start mosquitto.service
+``
+
 * Install wiringpi, piGPIO and OpenSSL:
 
 ```
