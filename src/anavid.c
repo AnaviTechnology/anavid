@@ -114,6 +114,10 @@ int main(int argc, char* argv[])
 	{
 		printf("ERROR: Cannot open '%s'. Loading default configrations...\n", CONFIGFILE);
 	}
+	else
+	{
+		printf("\nUsing configuration file: %s\n\n", CONFIGFILE);
+	}
 	printf("===CONFIGURATIONS===\n");
 	printf("MQTT address: %s\n", config.address);
 	printf("MQTT client ID: %s\n", config.clientId);
